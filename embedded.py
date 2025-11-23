@@ -35,6 +35,18 @@ class control:
         self.__stop_pump()
 
     
+# sudo apt update
+# sudo apt install python3-dev python3-pip python3-setuptools
+# pip3 install RPi.GPIO -GPIO can only be installed on a Raspberry Pi OS.
+# used to get data from the raspb.Pi pin.
 class qcm:
+    @staticmethod
     def get_qcm_frequency():
-        raise NotImplementedError()
+        import RPi.GPIO as GPIO
+        QCM_PIN = 3  # Change to the actual QCM sensor pin we're using
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(QCM_PIN, GPIO.IN)
+        # Read the sensor value
+        value = GPIO.input(QCM_PIN)
+        # we likely need to process 'value' to get the actual data, not sure how the sensor input looks like
+        return value
