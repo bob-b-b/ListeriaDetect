@@ -8,7 +8,7 @@ class control:
     PUMP_BACKWARD_GPIO=3
     BUTTON_GPIO=12
 
-    __QCM_FREQUENCY_SAMPLE_SIZE=25
+    __QCM_FREQUENCY_SAMPLE_SIZE=4
     __SECONDS_BETWEEN_SAMPLES=2
 
     __CLEANING_TIME_SECONDS=10
@@ -31,6 +31,17 @@ class control:
     
     def __stop_pump(self):
         self.__pump_pwm.stop()
+
+    def enable_button(self, callback_function):
+        GPIO.add_event_detect(
+            self.BUTTON_GPIO,
+            GPIO.FALLING,
+            callback=callback_function,
+            bouncetime=200
+        )
+
+    def disable_button(self):
+        GPIO.remove_event_detect(self.BUTTON_GPIO)
     
     def measure_frequency(self):
         self.__start_pump()
@@ -41,6 +52,8 @@ class control:
             time.sleep(self.__SECONDS_BETWEEN_SAMPLES)
 
         self.__stop_pump()
+        
+        return sample_sums/self.__QCM_FREQUENCY_SAMPLE_SIZE
 
     def clean(self):
         self.__start_pump(reverse=True)
@@ -57,12 +70,7 @@ class control:
         GPIO.setup(self.PUMP_BACKWARD_GPIO, GPIO.OUT)
 
         GPIO.setup(self.BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(
-            self.BUTTON_GPIO,
-            GPIO.FALLING,
-            callback=callback_function(),
-            bouncetime=200
-        )
+        self.enable_button(callback_function)
 
 
 class qcm:
