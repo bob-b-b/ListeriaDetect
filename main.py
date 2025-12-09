@@ -29,7 +29,7 @@ class __main:
         self.embedded_interaction = embedded.control(self.next_stage)
 
         is_running=True
-        self.stages=[self.start, self.measure_buffer, self.measure_sample, self.clean]
+        self.stages=[self.start, self.measure_nothing, self.measure_buffer, self.measure_sample, self.clean]
         
 
         self.stages[0]()
@@ -44,9 +44,15 @@ class __main:
         self.current_stage=(self.current_stage+1)%len(self.stages)
         self.embedded_interaction.enable_button(self.next_stage)
 
-    def start(slef):
+    def start(self):
         print("Please input the buffer solution, then press the button")
         #display.display.display_buffer_next()
+
+    def measure_nothing(self):
+        print("Measuring nothing... For maintenance?")
+        nothing_measurement=self.embedded_interaction.measure_frequency()
+        print(nothing_measurement)
+        #display.display.display_graph()
 
     def measure_buffer(self):
         print("Measuring buffer solution, insert sample next, then press the button")
