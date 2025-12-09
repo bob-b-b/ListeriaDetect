@@ -6,7 +6,7 @@ import frequency_grabber
 class control:
     PUMP_PWM_GPIO=16
     PUMP_FORWARD_GPIO=20
-    PUMP_BACKWARD_GPIO=16
+    PUMP_BACKWARD_GPIO=21
     BUTTON_GPIO=26
 
     __QCM_FREQUENCY_SAMPLE_SIZE=4
@@ -76,3 +76,8 @@ class control:
         self.enable_button(callback_function)
 
         self.qcm_interaction=frequency_grabber.fequency_grabber()
+
+    def __del__(self):
+        del self.qcm_interaction
+        self.__pump_pwm.stop()
+        GPIO.cleanup()

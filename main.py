@@ -1,10 +1,12 @@
 import display
 import embedded
 import time
+import signal
+import sys
 
+class __main__:
 
-class __main:
-
+    __is_running=False
     __buffer_measurement=None
     __sample_measurement=None
     __result=False
@@ -15,19 +17,25 @@ class __main:
     stages=[]
     current_stage=1
     
-    def run(self):
-
+    def __init__(self):
+        signal.signal(signal.SIGTERM, self.application_stop) 
+        signal.signal(signal.SIGINT, self.application_stop)
+        
         self.embedded_interaction = embedded.control(self.next_stage)
 
-        is_running=True
+        self.__is_running=True
         self.stages=[self.start, self.measure_nothing, self.measure_buffer, self.measure_sample, self.clean]
         
 
         self.stages[0]()
 
-        while(is_running):
-            time.sleep(1)
-                
+
+    def run(self):
+        try:
+            while(self.__is_running):
+                time.sleep(1)
+        except Exception as error:
+            print(error)
             
     def next_stage(self):
         self.embedded_interaction.disable_button()
@@ -72,8 +80,12 @@ class __main:
         print("Listeria: ", self.__result)
         #display.display.display_result(self.__result)
 
+    def application_stop(self,sig,frame):
+        self.__is_running=False
+        
+    def __del__(self):
+        del self.embedded_interaction
+
     
-application_instance=__main()
-
-
+application_instance=__main__()
 application_instance.run()
