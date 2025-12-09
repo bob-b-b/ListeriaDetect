@@ -56,8 +56,6 @@ Description=Liesteria Detect Application
 # Network dependency is intentionally omitted for faster startup, as the application is local.
 
 [Service]
-# NOTE: Adjust 'User' if your main user is not 'pi'
-User=pi
 # The full path to the Python script
 ExecStart=/usr/bin/python3 /home/pi/LiesteriaDetect/main.py
 # If the script exits unexpectedly, systemd will automatically restart it
