@@ -18,7 +18,7 @@ class frequency_grabber:
             self.__ser = None
 
         time.sleep(2)  # wait for Arduino to reset
-        self.__ser.reset_input_buffer()
+        if self.__ser: self.__ser.reset_input_buffer()
 
         # SQLite setup
         self.__conn = sqlite3.connect("qcm_data.db")
