@@ -39,6 +39,13 @@ class control:
         print("Draining callback queue while the process is running {button}")
 
     def enable_button(self, callback_function):
+        GPIO.add_event_detect(
+            self.BUTTON_GPIO,
+            GPIO.FALLING, 
+            self.__drain_callback,
+            bouncetime=200
+        )
+        time.sleep(500)
         GPIO.remove_event_detect(self.BUTTON_GPIO)
         GPIO.add_event_detect(
             self.BUTTON_GPIO,
@@ -49,12 +56,6 @@ class control:
 
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
-        GPIO.add_event_detect(
-            self.BUTTON_GPIO,
-            GPIO.FALLING, 
-            self.__drain_callback,
-            bouncetime=200
-        )
     
     def measure_frequency(self):
         self.__start_pump()
