@@ -35,14 +35,14 @@ class control:
     def __stop_pump(self):
         self.__pump_pwm.stop()
 
-    def __drain_callback(button):
+    def __drain_callback(self,button):
         print("Draining callback queue while the process is running {button}")
 
     def enable_button(self, callback_function):
         GPIO.add_event_detect(
             self.BUTTON_GPIO,
             GPIO.FALLING, 
-            self.__drain_callback,
+            callback=self.__drain_callback,
             bouncetime=200
         )
         time.sleep(0.5)
