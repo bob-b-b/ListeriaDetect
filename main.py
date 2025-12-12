@@ -9,11 +9,6 @@ import pyqtgraph as pg
 from PyQt5 import QtCore, QtWidgets
 
 
-app = display.QtWidgets.QApplication([])
-main_window = display.MainWindow(embedded.control.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
-main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
-main_window.showMaximized()
-
 # This forces the application to render directly to the LCD driver.
 os.environ['QT_QPA_PLATFORM'] = 'linuxfb'
 
