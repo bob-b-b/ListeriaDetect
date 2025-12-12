@@ -3,6 +3,7 @@ import display
 import embedded
 import time
 import signal
+import os
 import sys
 
 class __main__:
@@ -113,6 +114,8 @@ class __main__:
     def __del__(self):
         del self.embedded_interaction
 
+# This forces the application to render directly to the LCD driver.
+os.environ['QT_QPA_PLATFORM'] = 'linuxfb'
     
 application_instance=__main__()
 application_instance.run()
