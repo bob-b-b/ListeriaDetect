@@ -37,9 +37,9 @@ class __main__:
         try:
             while(self.__is_running):
                 if(self.__event_drain_necessary):
-                    self.embedded_interaction.drain_and_enable_button()
+                    self.embedded_interaction.drain_and_enable_button(self.next_stage)
                     self.__event_drain_necessary=False
-                    
+
                 time.sleep(1)
         except Exception as error:
             print(error)

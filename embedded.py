@@ -46,7 +46,7 @@ class control:
             bouncetime=200
         )
 
-    def drain_and_enable_button(self):
+    def drain_and_enable_button(self, callback_function):
         GPIO.add_event_detect(
             self.BUTTON_GPIO,
             GPIO.FALLING, 
@@ -55,7 +55,7 @@ class control:
         )
         time.sleep(0.5)
         GPIO.remove_event_detect(self.BUTTON_GPIO)
-        self.__enable_button()
+        self.__enable_button(callback_function)
 
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
