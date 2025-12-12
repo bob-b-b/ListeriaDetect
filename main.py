@@ -40,7 +40,7 @@ class __main__:
         except Exception as error:
             print(error)
             
-    def next_stage(self, button=None):
+    async def next_stage(self, button=None):
 
         if self.__porcess_in_progress:
             print("Another process is currently executing, call was discarded")
