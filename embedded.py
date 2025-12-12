@@ -49,7 +49,12 @@ class control:
 
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
-        GPIO.add_event_detect(self.BUTTON_GPIO, self.__drain_callback)
+        GPIO.add_event_detect(
+            self.BUTTON_GPIO,
+            GPIO.FALLING, 
+            self.__drain_callback,
+            bouncetime=200
+        )
     
     def measure_frequency(self):
         self.__start_pump()
