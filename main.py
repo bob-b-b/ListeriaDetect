@@ -39,13 +39,13 @@ class __main__:
         main_window = display.MainWindow(self.embedded_interaction.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
         main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
         main_window.showMaximized()
-        app.exec()
 
         self.stages[0]()
 
 
     def run(self):
         try:
+            app.exec()
             while(self.__is_running):
                 if(self.__event_drain_necessary):
                     self.embedded_interaction.drain_and_enable_button(self.next_stage)
