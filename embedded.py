@@ -35,6 +35,9 @@ class control:
     def __stop_pump(self):
         self.__pump_pwm.stop()
 
+    def __drain_callback(button):
+        print("Draining callback queue while the process is running {button}")
+
     def enable_button(self, callback_function):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
         GPIO.add_event_detect(
@@ -46,6 +49,7 @@ class control:
 
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
+        GPIO.add_event_detect(self.BUTTON_GPIO, self.__drain_callback)
     
     def measure_frequency(self):
         self.__start_pump()
