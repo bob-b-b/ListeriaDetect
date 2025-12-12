@@ -10,6 +10,9 @@ import sys
 os.environ['QT_QPA_PLATFORM'] = 'linuxfb'
 
 app = display.QtWidgets.QApplication([])
+main_window = display.MainWindow(embedded.control.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
+main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
+main_window.showMaximized()
 
 class __main__:
 
@@ -41,9 +44,6 @@ class __main__:
 
     def run(self):
         try:
-            main_window = display.MainWindow(embedded.control.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
-            main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
-            main_window.showMaximized()
             self.stages[0]()
             while(self.__is_running):
                 if(self.__event_drain_necessary):
@@ -113,8 +113,6 @@ class __main__:
     def __del__(self):
         del self.embedded_interaction
 
-    
-#app = display.QtWidgets.QApplication([])
 main_window = None
 
 application_instance=__main__()
