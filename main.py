@@ -11,7 +11,11 @@ import sys
 os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=true'
 os.environ['QT_QPA_PLATFORM'] = 'linuxfb'
 
+os.environ['QT_QPA_FONTDIR'] = '/usr/share/fonts/truetype/dejavu'
 
+os.environ['QT_QPA_FB_NO_LIBINPUT'] = '1'
+
+os.environ['QT_QPA_FB_LEAD_INPUT'] = '/dev/input/event5'
 
 
 class __main__:
