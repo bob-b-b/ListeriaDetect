@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import display
+
 import embedded
 import time
 import signal
@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtWidgets
 os.environ['QT_QPA_PLATFORM'] = 'linuxfb'
 
 app = display.QtWidgets.QApplication([])
+import display
 main_window = display.MainWindow(embedded.control.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
 main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
 main_window.showMaximized()
