@@ -35,24 +35,27 @@ class control:
     def __stop_pump(self):
         self.__pump_pwm.stop()
 
-    def __drain_callback(button):
+    def __drain_callback(self,button):
         print("Draining callback queue while the process is running {button}")
 
-    def enable_button(self, callback_function):
-        GPIO.add_event_detect(
-            self.BUTTON_GPIO,
-            GPIO.FALLING, 
-            self.__drain_callback,
-            bouncetime=200
-        )
-        time.sleep(500)
-        GPIO.remove_event_detect(self.BUTTON_GPIO)
+    def __enable_button(self, callback_function):
         GPIO.add_event_detect(
             self.BUTTON_GPIO,
             GPIO.FALLING,
             callback=callback_function,
             bouncetime=200
         )
+
+    def drain_and_enable_button(self, callback_function):
+        GPIO.add_event_detect(
+            self.BUTTON_GPIO,
+            GPIO.FALLING, 
+            callback=self.__drain_callback,
+            bouncetime=200
+        )
+        time.sleep(0.5)
+        GPIO.remove_event_detect(self.BUTTON_GPIO)
+        self.__enable_button(callback_function)
 
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
@@ -85,7 +88,7 @@ class control:
         GPIO.setup(self.PUMP_BACKWARD_GPIO, GPIO.OUT)
 
         GPIO.setup(self.BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        self.enable_button(callback_function)
+        self.__enable_button(callback_function)
 
         self.qcm_interaction=frequency_grabber.frequency_grabber()
 
