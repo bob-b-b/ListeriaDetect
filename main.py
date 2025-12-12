@@ -38,7 +38,7 @@ class __main__:
         except Exception as error:
             print(error)
             
-    def next_stage(self):
+    def next_stage(self, button=None):
         self.embedded_interaction.disable_button()
         self.stages[self.current_stage]() #Runs the stored function
         self.current_stage=(self.current_stage+1)%len(self.stages)
