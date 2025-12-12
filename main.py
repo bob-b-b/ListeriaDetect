@@ -38,7 +38,7 @@ class __main__:
         global app
         global main_window
         app = display.QtWidgets.QApplication([])
-        main_window = display.MainWindow(10) #SET NUMBER to max data size
+        main_window = display.MainWindow(self.embedded_interaction.QCM_FREQUENCY_SAMPLE_SIZE) #SET NUMBER to max data size
         main_window.setWindowFlags(display.QtCore.Qt.CustomizeWindowHint)
         main_window.showMaximized()
         app.exec()
@@ -65,7 +65,7 @@ class __main__:
         print("Please input the buffer solution, then press the button")
         #display.display.display_buffer_next()
         global main_window
-        main_window.show_text("Please input the buffer solution, then press the button")
+        self.main_window.show_text("Please input the buffer solution, then press the button")
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
