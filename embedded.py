@@ -88,7 +88,7 @@ class control:
         GPIO.setup(self.PUMP_BACKWARD_GPIO, GPIO.OUT)
 
         GPIO.setup(self.BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        self.enable_button(callback_function)
+        self.__enable_button(callback_function)
 
         self.qcm_interaction=frequency_grabber.frequency_grabber()
 
