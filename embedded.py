@@ -53,6 +53,7 @@ class control:
         for _ in range(self.__QCM_FREQUENCY_SAMPLE_SIZE):
             sample_sums+=self.qcm_interaction.getQCMFreq()
             time.sleep(self.__SECONDS_BETWEEN_SAMPLES)
+            print("Frequency current frequency sum:", sample_sums)
 
         self.__stop_pump()
         
