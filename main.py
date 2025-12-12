@@ -12,8 +12,6 @@ class __main__:
     __sample_measurement=None
     __result=False
 
-    __is_processing=False
-
     __MEASUREMENT_TOLERANCE=1000
 
     embedded_interaction=None
@@ -40,21 +38,11 @@ class __main__:
         except Exception as error:
             print(error)
             
-    def next_stage(self, button=None):
-        
-        if self.__is_processing==True:
-            print("Previous process still in progress, please try again later")
-            return
-
+    def next_stage(self):
         self.embedded_interaction.disable_button()
-        self.__is_processing=True
-
         self.stages[self.current_stage]() #Runs the stored function
         self.current_stage=(self.current_stage+1)%len(self.stages)
-
-        self.__is_processing=False
         self.embedded_interaction.enable_button(self.next_stage)
-
 
     def start(self):
         print("Please input the buffer solution, then press the button")

@@ -36,6 +36,7 @@ class control:
         self.__pump_pwm.stop()
 
     def enable_button(self, callback_function):
+        GPIO.remove_event_detect(self.BUTTON_GPIO)
         GPIO.add_event_detect(
             self.BUTTON_GPIO,
             GPIO.FALLING,
