@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import display
 import embedded
 import time
@@ -105,8 +104,32 @@ class __main__:
         shared_msg.trigger_graph.emit()
 
         self.__sample_measurement=self.embedded_interaction.measure_frequency(AddTypes.SAMPLE)
-        self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
-                          and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
+        # old tolerance check. currently we utilize both so might as well leave it in as
+        # were weren't able to do testing with actual listeria and refine the checks for that
+        legacy_result = not(
+            self.__buffer_measurement - self.__MEASUREMENT_TOLERANCE
+            < self.__sample_measurement
+            and self.__sample_measurement
+            < self.__buffer_measurement + self.__MEASUREMENT_TOLERANCE
+        )
+
+        # using processing (Kanzawa-Gordon equation)
+        try:
+            # Use Kanazawa–Gordon expected values for water as a default test
+            expected_liquid = {
+                'f0': 10e6,
+                'eta_L': 1.002e-3,
+                'rho_L': 998.2,
+                'mu_Q': 2.947e10,
+                'rho_Q': 2648.0,
+            }
+            detector_result, score = self.embedded_interaction.detect_listeria(
+                baseline=self.__buffer_measurement, expected_liquid=expected_liquid, threshold_hz=100.0
+            )
+        except Exception:
+            detector_result, score = False, 0.0
+
+        self.__result = detector_result or legacy_result
         #display.display.display_cleaning_next()
 
         print(self.__sample_measurement)
