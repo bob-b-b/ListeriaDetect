@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 import time
 import RPi.GPIO as GPIO
 import frequency_grabber
+import processing
 
 class control:
     PUMP_PWM_GPIO=16
@@ -65,7 +65,14 @@ class control:
 
         sample_sums=0
         for _ in range(self.__QCM_FREQUENCY_SAMPLE_SIZE):
-            sample_sums+=self.qcm_interaction.getQCMFreq()
+            sample = self.qcm_interaction.getQCMFreq()
+            sample_sums += sample
+            # give the processing pipeline the raw frequency
+            try:
+                self.processor.add_frequency(sample)
+            except Exception:
+                # processing should not break measurements; should be able to largely ignore errors here
+                pass
             time.sleep(self.__SECONDS_BETWEEN_SAMPLES)
             print("Frequency current frequency sum:", sample_sums)
 
@@ -91,8 +98,14 @@ class control:
         self.__enable_button(callback_function)
 
         self.qcm_interaction=frequency_grabber.frequency_grabber()
+        # processing for smoothing and detection
+        self.processor = processing.Processor(window=self.QCM_FREQUENCY_SAMPLE_SIZE, ema_alpha=0.25)
 
     def __del__(self):
         del self.qcm_interaction
+        del self.processor
         self.__pump_pwm.stop()
         GPIO.cleanup()
+
+    def detect_listeria(self, baseline: float = None, coeffs: dict = None, threshold: float = 0.0):
+        return self.processor.detect_listeria(baseline=baseline, coeffs=coeffs, threshold=threshold)

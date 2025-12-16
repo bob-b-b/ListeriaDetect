@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import display
 import embedded
 import time
@@ -99,9 +98,33 @@ class __main__:
         main_window.show_graph()
         main_window.set_title("Measuring sample...")
 
-        self.__sample_measurement=self.embedded_interaction.measure_frequency()
-        self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
-                          and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
+        self.__sample_measurement = self.embedded_interaction.measure_frequency()
+
+        # old tolerance check, probably can just be removed
+        legacy_result = not(
+            self.__buffer_measurement - self.__MEASUREMENT_TOLERANCE
+            < self.__sample_measurement
+            and self.__sample_measurement
+            < self.__buffer_measurement + self.__MEASUREMENT_TOLERANCE
+        )
+
+        # using processing (Kanzawa-Gordon equation)
+        try:
+            # Use Kanazawa–Gordon expected values for water as a default test
+            expected_liquid = {
+                'f0': 10e6,
+                'eta_L': 1.002e-3,
+                'rho_L': 998.2,
+                'mu_Q': 2.947e10,
+                'rho_Q': 2648.0,
+            }
+            detector_result, score = self.embedded_interaction.detect_listeria(
+                baseline=self.__buffer_measurement, expected_liquid=expected_liquid, threshold_hz=100.0
+            )
+        except Exception:
+            detector_result, score = False, 0.0
+
+        self.__result = detector_result or legacy_result
         #display.display.display_cleaning_next()
         main_window.show_text("Measurement done.  Switch to cleaning solution, then press the button.")
 
