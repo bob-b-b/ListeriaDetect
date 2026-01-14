@@ -1,5 +1,8 @@
-import pyqtgraph as pg
 from PyQt5 import QtCore, QtWidgets
+from pyqtgraph import PlotWidget, plot
+import pyqtgraph as pg
+import sys
+import os
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, time_range):
