@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-from pyqtgraph import PlotWidget, plot, pyqtSlot
+from pyqtgraph import PlotWidget, plot
 import pyqtgraph as pg
 import sys  # We need sys so that we can pass argv to QApplication
 import os
@@ -83,11 +83,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 #These methods switch between showing graph and instruction
+    @QtCore.pyqtSlot(str)
     def show_text(self, text):
         self.textscreen.setText(text)
         self.plot_graph.hide()
         self.textscreen.showMaximized()
 
+    @QtCore.pyqtSlot()
     def show_graph(self):
         self.textscreen.hide()
         self.plot_graph.showMaximized()
