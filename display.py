@@ -52,10 +52,10 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(500)
-        self.timer.timeout.connect(self.update_plot)
-        self.timer.start()
+        #self.timer = QtCore.QTimer()
+        #self.timer.setInterval(500)
+        #self.timer.timeout.connect(self.update_plot)
+        #self.timer.start()
 
 
 #These methods update the graph itself
@@ -71,10 +71,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def add_value_buffer(self,value):
         if len(self.buffer) < self.time:
             self.buffer.append(value) #cut off values after time_range
+        self.update_plot()
 
     def add_value_sample(self,value):
         if len(self.sample) < self.time:
             self.sample.append(value) #cut off values after time_range
+        self.update_plot()
 
     def clear_data(self):
         self.buffer = []
@@ -90,3 +92,5 @@ class MainWindow(QtWidgets.QMainWindow):
     def show_graph(self):
         self.textscreen.hide()
         self.plot_graph.showMaximized()
+        
+    
