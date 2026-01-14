@@ -71,7 +71,7 @@ class __main__:
         nothing_measurement=self.embedded_interaction.measure_frequency(main_window)
         print(nothing_measurement)
         #display.display.display_graph()
-        main_window.show_graph()
+        #main_window.show_graph()
 
     def measure_buffer(self):
         print("Measuring buffer solution, insert sample next, then press the button")
