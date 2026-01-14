@@ -5,6 +5,7 @@ import time
 import signal
 import os
 import sys
+from signals import shared_msg
 
 class __main__:
 
@@ -71,42 +72,42 @@ class __main__:
         nothing_measurement=self.embedded_interaction.measure_frequency(main_window)
         print(nothing_measurement)
         #display.display.display_graph()
-        #main_window.show_graph()
+        shared_msg.trigger_graph.emit()
 
     def measure_buffer(self):
         print("Measuring buffer solution, insert sample next, then press the button")
         #display.display.display_graph()
-        main_window.show_graph()
+        shared_msg.trigger_graph.emit()
         main_window.set_title("Measuring buffer...")
 
         self.__buffer_measurement=self.embedded_interaction.measure_frequency(main_window)
 
         #display.display.display_sample_next()
-        main_window.show_text("Measurement done.  Switch to sample, then press the button.")
+        shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
 
         
 
     def measure_sample(self):
         print ("Measuring sample solution, insert cleaning next, then press the button")
         #display.display.display_graph()
-        main_window.show_graph()
+        shared_msg.trigger_graph.emit()
         main_window.set_title("Measuring sample...")
 
         self.__sample_measurement=self.embedded_interaction.measure_frequency(main_window)
         self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
                           and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
         #display.display.display_cleaning_next()
-        main_window.show_text("Measurement done.  Switch to cleaning solution, then press the button.")
+        shared_msg.trigger_text.emit("Measurement done.  Switch to cleaning solution, then press the button.")
 
 
     def clean(self):
         print("Cleaning the device, perepare next sample")
         #display.display.display_cleaning()
-        main_window.show_text("Cleaning the device, perepare next sample")
+        shared_msg.trigger_text.emit("Cleaning the device, perepare next sample")
         self.embedded_interaction.clean()
         print("Listeria: ", self.__result)
         #display.display.display_result(self.__result)
-        main_window("Listeria: {self.__result}")
+        shared_msg.trigger_text.emit("Listeria: {self.__result}")
 
     def application_stop(self,sig,frame):
         self.__is_running=False

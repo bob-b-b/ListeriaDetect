@@ -1,12 +1,16 @@
 from PyQt5 import QtCore, QtWidgets
-from pyqtgraph import PlotWidget, plot
+from pyqtgraph import PlotWidget, plot, pyqtSlot
 import pyqtgraph as pg
 import sys  # We need sys so that we can pass argv to QApplication
 import os
+from signals import shared_msg
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, time_range):
         super().__init__()
+
+        shared_msg.trigger_graph.connect(self.show_graph)
+        shared_msg.trigger_text.connect(self.show_text)
 
         #Text Screen
         self.textscreen = QtWidgets.QLabel(self)
