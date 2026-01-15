@@ -5,6 +5,7 @@ import time
 import signal
 import os
 import sys
+import threading
 from signals import shared_msg
 
 class __main__:
@@ -46,15 +47,21 @@ class __main__:
 
     def run(self):
         try:
-            while(self.__is_running):
+            reset_thread=threading.Thread(target=self.button_press_reset)
+            reset_thread.start()
+            app.exec()
+            reset_thread.join()
+        except Exception as error:
+            print(error)
+    
+    def button_press_reset(self):
+        while(self.__is_running):
                 if(self.__event_drain_necessary):
                     self.embedded_interaction.drain_and_enable_button(self.next_stage)
                     self.__event_drain_necessary=False
 
                 time.sleep(1)
-        except Exception as error:
-            print(error)
-            
+
     def next_stage(self, button=None):
         self.embedded_interaction.disable_button()
         self.stages[self.current_stage]() #Runs the stored function
