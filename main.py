@@ -75,7 +75,7 @@ class __main__:
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
-        nothing_measurement=self.embedded_interaction.measure_frequency(main_window)
+        nothing_measurement=self.embedded_interaction.measure_frequency()
         print(nothing_measurement)
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
@@ -84,9 +84,8 @@ class __main__:
         print("Measuring buffer solution, insert sample next, then press the button")
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
-        main_window.set_title("Measuring buffer...")
 
-        self.__buffer_measurement=self.embedded_interaction.measure_frequency(main_window)
+        self.__buffer_measurement=self.embedded_interaction.measure_frequency()
 
         #display.display.display_sample_next()
         shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
@@ -97,9 +96,8 @@ class __main__:
         print ("Measuring sample solution, insert cleaning next, then press the button")
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
-        main_window.set_title("Measuring sample...")
 
-        self.__sample_measurement=self.embedded_interaction.measure_frequency(main_window)
+        self.__sample_measurement=self.embedded_interaction.measure_frequency()
         self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
                           and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
         #display.display.display_cleaning_next()

@@ -5,6 +5,8 @@ class ScreenSignals(QObject):
     trigger_graph = pyqtSignal()
     trigger_text = pyqtSignal(str)
 
+    add_value = pyqtSignal(float)
+
 
 # Create one shared instance to be used everywhere
 shared_msg = ScreenSignals()
