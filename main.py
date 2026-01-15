@@ -46,7 +46,6 @@ class __main__:
 
     def run(self):
         try:
-            app.exec()
             while(self.__is_running):
                 if(self.__event_drain_necessary):
                     self.embedded_interaction.drain_and_enable_button(self.next_stage)
