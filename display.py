@@ -11,6 +11,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         shared_msg.trigger_graph.connect(self.show_graph)
         shared_msg.trigger_text.connect(self.show_text)
+        shared_msg.add_value.connect(self.add_value_buffer)
 
         #Text Screen
         self.textscreen = QtWidgets.QLabel(self)
@@ -55,11 +56,6 @@ class MainWindow(QtWidgets.QMainWindow):
             name="Sample",
             pen=pen,
         )
-
-        self.timer = pg.QtCore.QTimer()
-        self.timer.setInterval(50)
-        self.timer.timeout.connect(self.update_plot_data)
-        self.timer.start()
 
 
 #These methods update the graph itself
