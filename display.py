@@ -56,6 +56,11 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
+        self.timer = pg.QtCore.QTimer()
+        self.timer.setInterval(50)
+        self.timer.timeout.connect(self.update_plot_data)
+        self.timer.start()
+
 
 #These methods update the graph itself
     def update_plot(self):
