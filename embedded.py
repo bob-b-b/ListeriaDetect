@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 import frequency_grabber
 import display
-from signals import shared_msg
+from signals import shared_msg, AddTypes
 
 
 class control:
@@ -63,13 +63,13 @@ class control:
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
     
-    def measure_frequency(self):
+    def measure_frequency(self, type:AddTypes = AddTypes.NO_TYPE):
         self.__start_pump()
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):
             sample=self.qcm_interaction.getQCMFreq()
-            shared_msg.add_value.emit(sample)
+            shared_msg.add_value.emit(sample, type)
             sample_sums+=sample
             time.sleep(self.__SECONDS_BETWEEN_SAMPLES)
             print("Frequency current frequency sum:", sample_sums)

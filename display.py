@@ -3,7 +3,7 @@ from pyqtgraph import PlotWidget, plot
 import pyqtgraph as pg
 import sys  # We need sys so that we can pass argv to QApplication
 import os
-from signals import shared_msg
+from signals import shared_msg, AddTypes
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, time_range):
@@ -12,6 +12,7 @@ class MainWindow(QtWidgets.QMainWindow):
         shared_msg.trigger_graph.connect(self.show_graph)
         shared_msg.trigger_text.connect(self.show_text)
         shared_msg.add_value.connect(self.add_value_buffer)
+        shared_msg.clear_data.connect(self.clear_data)
 
         #Text Screen
         self.textscreen = QtWidgets.QLabel(self)
@@ -68,15 +69,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 #These methods update the data used in the graph
-    def add_value_buffer(self,value):
-        if len(self.buffer) < self.time:
-            self.buffer.append(value) #cut off values after time_range
-        self.update_plot()
-
-    def add_value_sample(self,value):
-        if len(self.sample) < self.time:
-            self.sample.append(value) #cut off values after time_range
-        self.update_plot()
+    def add_value(self,value,type):
+        if type==AddTypes.BUFFER:
+            if len(self.buffer) < self.time:
+                self.buffer.append(value) #cut off values after time_range
+            self.update_plot()
+        if type==AddTypes.SAMPLE:
+            if len(self.sample) < self.time:
+                self.sample.append(value) #cut off values after time_range
+            self.update_plot()
 
     def clear_data(self):
         self.buffer = []

@@ -6,7 +6,7 @@ import signal
 import os
 import sys
 import threading
-from signals import shared_msg
+from signals import shared_msg, AddTypes
 
 class __main__:
 
@@ -69,13 +69,14 @@ class __main__:
         self.__event_drain_necessary=True
 
     def start(self):
+        shared_msg.clear_data.emit()
         print("Please press button for control measurement solution, then press the button")
         #display.display.display_buffer_next()
         main_window.show_text("Please press button for control measurement solution, then press the button")
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
-        nothing_measurement=self.embedded_interaction.measure_frequency()
+        nothing_measurement=self.embedded_interaction.measure_frequency(AddTypes.NO_TYPE)
         print(nothing_measurement)
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
@@ -85,7 +86,7 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__buffer_measurement=self.embedded_interaction.measure_frequency()
+        self.__buffer_measurement=self.embedded_interaction.measure_frequency(AddTypes.BUFFER)
 
         #display.display.display_sample_next()
         shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
@@ -97,7 +98,7 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__sample_measurement=self.embedded_interaction.measure_frequency()
+        self.__sample_measurement=self.embedded_interaction.measure_frequency(AddTypes.SAMPLE)
         self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
                           and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
         #display.display.display_cleaning_next()
