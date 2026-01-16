@@ -16,8 +16,9 @@ class control:
     __SECONDS_BETWEEN_SAMPLES=1
 
     __CLEANING_TIME_SECONDS=25
+    __TIME_BEFORE_MEASUREMENT=10
 
-    __PWM_DUTY_CYCLE=70
+    __PWM_DUTY_CYCLE=100
     __PWM_FREQUENCY=255
 
     __pump_pwm=None
@@ -65,7 +66,7 @@ class control:
     
     def measure_frequency(self, type:AddTypes = AddTypes.NO_TYPE):
         self.__start_pump()
-        time.sleep(5)
+        time.sleep(self.__TIME_BEFORE_MEASUREMENT)
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):
