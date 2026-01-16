@@ -3,6 +3,8 @@ import time
 import RPi.GPIO as GPIO
 import frequency_grabber
 import display
+from signals import shared_msg, AddTypes
+
 
 class control:
     PUMP_PWM_GPIO=16
@@ -10,12 +12,14 @@ class control:
     PUMP_BACKWARD_GPIO=21
     BUTTON_GPIO=26
 
-    QCM_FREQUENCY_SAMPLE_SIZE=4
-    __SECONDS_BETWEEN_SAMPLES=2
+    QCM_FREQUENCY_SAMPLE_SIZE=80
+    __SECONDS_BETWEEN_SAMPLES=0.5
 
-    __CLEANING_TIME_SECONDS=10
+    __CLEANING_TIME_SECONDS=25
+    __TIME_BEFORE_MEASUREMENT=20
+    __LIQUID_EXPULSION_TIME=15
 
-    __PWM_DUTY_CYCLE=50
+    __PWM_DUTY_CYCLE=70
     __PWM_FREQUENCY=255
 
     __pump_pwm=None
@@ -61,13 +65,14 @@ class control:
     def disable_button(self):
         GPIO.remove_event_detect(self.BUTTON_GPIO)
     
-    def measure_frequency(self, display:display.MainWindow):
+    def measure_frequency(self, type:AddTypes = AddTypes.NO_TYPE):
         self.__start_pump()
+        time.sleep(self.__TIME_BEFORE_MEASUREMENT)
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):
             sample=self.qcm_interaction.getQCMFreq()
-            display.add_value_buffer(sample)
+            shared_msg.add_value.emit(sample, type)
             sample_sums+=sample
             time.sleep(self.__SECONDS_BETWEEN_SAMPLES)
             print("Frequency current frequency sum:", sample_sums)
@@ -75,6 +80,11 @@ class control:
         self.__stop_pump()
         
         return sample_sums/self.QCM_FREQUENCY_SAMPLE_SIZE
+    
+    def expulse_remaining_liquid(self):
+        self.__start_pump()
+        time.sleep(self.__LIQUID_EXPULSION_TIME)
+        self.__stop_pump()
 
     def clean(self):
         self.__start_pump(reverse=True)

@@ -13,7 +13,7 @@ class frequency_grabber:
         # Set the correct Serial port
         #More robust error handling would be better here, this is for testing
         try:
-            self.__ser = serial.Serial('/dev/ttyUSB1', 115200, timeout=1)
+            self.__ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
             print("Successful connection established")
         except Exception as e:
             self.__ser = None
