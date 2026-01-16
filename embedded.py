@@ -79,6 +79,11 @@ class control:
         self.__stop_pump()
         
         return sample_sums/self.QCM_FREQUENCY_SAMPLE_SIZE
+    
+    def expulse_remaining_liquid(self):
+        self.__start_pump()
+        time.sleep()
+        self.__stop_pump()
 
     def clean(self):
         self.__start_pump(reverse=True)

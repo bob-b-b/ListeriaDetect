@@ -33,7 +33,7 @@ class __main__:
         self.embedded_interaction = embedded.control(self.next_stage)
 
         self.__is_running=True
-        self.stages=[self.start, self.measure_nothing, self.measure_buffer, self.measure_sample, self.clean]
+        self.stages=[self.start, self.measure_nothing, self.measure_buffer, self.expulse_remains, self.measure_sample, self.clean]
 
         global app
         global main_window
@@ -93,6 +93,10 @@ class __main__:
 
         print(self.__buffer_measurement)
 
+
+    def expulse_remains(self):
+        print("Getting rid of remaining liquid")
+        self.embedded_interaction.expulse_remaining_liquid()
         
 
     def measure_sample(self):
