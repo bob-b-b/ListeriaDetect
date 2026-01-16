@@ -17,6 +17,7 @@ class control:
 
     __CLEANING_TIME_SECONDS=25
     __TIME_BEFORE_MEASUREMENT=20
+    __LIQUID_EXPULSION_TIME=15
 
     __PWM_DUTY_CYCLE=70
     __PWM_FREQUENCY=255
@@ -82,7 +83,7 @@ class control:
     
     def expulse_remaining_liquid(self):
         self.__start_pump()
-        time.sleep()
+        time.sleep(self.__LIQUID_EXPULSION_TIME)
         self.__stop_pump()
 
     def clean(self):
