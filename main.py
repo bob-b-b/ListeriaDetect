@@ -91,6 +91,8 @@ class __main__:
         #display.display.display_sample_next()
         shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
 
+        print(self.__buffer_measurement)
+
         
 
     def measure_sample(self):
@@ -102,6 +104,8 @@ class __main__:
         self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
                           and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
         #display.display.display_cleaning_next()
+
+        print(self.__sample_measurement)
         shared_msg.trigger_text.emit("Measurement done.  Switch to cleaning solution, then press the button.")
 
 
