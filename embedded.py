@@ -12,8 +12,8 @@ class control:
     PUMP_BACKWARD_GPIO=21
     BUTTON_GPIO=26
 
-    QCM_FREQUENCY_SAMPLE_SIZE=4
-    __SECONDS_BETWEEN_SAMPLES=2
+    QCM_FREQUENCY_SAMPLE_SIZE=20
+    __SECONDS_BETWEEN_SAMPLES=1
 
     __CLEANING_TIME_SECONDS=10
 
@@ -65,6 +65,7 @@ class control:
     
     def measure_frequency(self, type:AddTypes = AddTypes.NO_TYPE):
         self.__start_pump()
+        time.sleep(5)
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):
