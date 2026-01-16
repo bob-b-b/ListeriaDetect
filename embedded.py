@@ -18,7 +18,7 @@ class control:
     __CLEANING_TIME_SECONDS=25
     __TIME_BEFORE_MEASUREMENT=20
 
-    __PWM_DUTY_CYCLE=100
+    __PWM_DUTY_CYCLE=70
     __PWM_FREQUENCY=255
 
     __pump_pwm=None
