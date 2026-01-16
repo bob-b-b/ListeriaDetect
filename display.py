@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.plot_graph = pg.PlotWidget()
         self.plot_graph.hide()
         self.plot_graph.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
-        self.plot_graph.setTitle("Frequency Over Time", color="w", size="20pt") #MAKE TITLE CHANGEABLE IN A METHOD
+        self.plot_graph.setTitle("Frequency Over Time", color="k", size="20pt") #MAKE TITLE CHANGEABLE IN A METHOD
         styles = {"color": "red", "font-size": "18px"}
         self.plot_graph.setLabel("left", "Frequency (unit)", **styles)
         self.plot_graph.setLabel("bottom", "Time (unit)", **styles)
@@ -80,12 +80,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #These methods switch between showing graph and instruction
     def show_text(self, text):
-        self.textscreen.setText(text)
-        self.plot_graph.hide()
-        self.textscreen.showMaximized()
+        self.plot_graph.setTitle(text)
 
     def show_graph(self):
-        self.textscreen.hide()
         self.plot_graph.showMaximized()
         
     
