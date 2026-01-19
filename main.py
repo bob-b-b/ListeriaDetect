@@ -71,6 +71,7 @@ class __main__:
         shared_msg.clear_data.emit()
         print("Please press button for control measurement solution, then press the button")
         #display.display.display_buffer_next()
+        main_window.show_graph()
         main_window.show_text("Please press button for control measurement solution, then press the button")
 
     def measure_nothing(self):
