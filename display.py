@@ -15,15 +15,15 @@ class MainWindow(QtWidgets.QMainWindow):
         shared_msg.clear_data.connect(self.clear_data)
 
         #Text Screen
-        self.textscreen = QtWidgets.QLabel(self)
-        self.textscreen.hide()
-        self.textscreen.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
-        font = self.textscreen.font()
-        font.setPixelSize(30)
-        self.textscreen.setFont(font)
-        self.textscreen.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        #self.textscreen = QtWidgets.QLabel(self)
+        #self.textscreen.hide()
+        #self.textscreen.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        #font = self.textscreen.font()
+        #font.setPixelSize(30)
+        #self.textscreen.setFont(font)
+        #self.textscreen.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
-        self.setCentralWidget(self.textscreen)
+        
 
         #Frequency Plot
         pg.setConfigOption('background', 'k')
@@ -38,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.plot_graph.showGrid(x=True, y=True)
         #self.plot_graph.setXRange(0, 10)
         #self.plot_graph.setYRange(0, 10)
+        self.setCentralWidget(self.plot_graph)
 
         self.time = time_range
         self.buffer = []
