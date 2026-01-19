@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import display
 import embedded
 import time
@@ -6,7 +5,7 @@ import signal
 import os
 import sys
 import threading
-from signals import shared_msg, AddTypes
+from signals import shared_msg, MeasurementTypes
 
 class __main__:
 
@@ -76,7 +75,7 @@ class __main__:
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
-        nothing_measurement=self.embedded_interaction.measure_frequency(AddTypes.NO_TYPE)
+        nothing_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.NO_TYPE)
         print(nothing_measurement)
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
@@ -87,7 +86,7 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__buffer_measurement=self.embedded_interaction.measure_frequency(AddTypes.BUFFER)
+        self.__buffer_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.BUFFER)
 
         #display.display.display_sample_next()
         shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
@@ -105,9 +104,33 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__sample_measurement=self.embedded_interaction.measure_frequency(AddTypes.SAMPLE)
-        self.__result=not(self.__buffer_measurement-self.__MEASUREMENT_TOLERANCE<self.__sample_measurement 
-                          and self.__sample_measurement<self.__buffer_measurement+self.__MEASUREMENT_TOLERANCE)
+        self.__sample_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.SAMPLE)
+        # old tolerance check. currently we utilize both so might as well leave it in as
+        # were weren't able to do testing with actual listeria and refine the checks for that
+        legacy_result = not(
+            self.__buffer_measurement - self.__MEASUREMENT_TOLERANCE
+            < self.__sample_measurement
+            and self.__sample_measurement
+            < self.__buffer_measurement + self.__MEASUREMENT_TOLERANCE
+        )
+
+        # using processing (Kanzawa-Gordon equation)
+        try:
+            # Use Kanazawa–Gordon expected values for water as a default test
+            expected_liquid = {
+                'f0': 10e6,
+                'eta_L': 1.002e-3,
+                'rho_L': 998.2,
+                'mu_Q': 2.947e10,
+                'rho_Q': 2648.0,
+            }
+            detector_result, score = self.embedded_interaction.detect_listeria(
+                baseline=self.__buffer_measurement, expected_liquid=expected_liquid, threshold_hz=100.0
+            )
+        except Exception:
+            detector_result, score = False, 0.0
+
+        self.__result = detector_result or legacy_result
         #display.display.display_cleaning_next()
 
         print(self.__sample_measurement)

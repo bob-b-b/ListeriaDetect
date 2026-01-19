@@ -3,7 +3,7 @@ from pyqtgraph import PlotWidget, plot
 import pyqtgraph as pg
 import sys  # We need sys so that we can pass argv to QApplication
 import os
-from signals import shared_msg, AddTypes
+from signals import shared_msg, MeasurementTypes
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, time_range):
@@ -71,15 +71,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #These methods update the data used in the graph
     def add_value(self,value,type):
+<<<<<<< HEAD
         if type==AddTypes.NO_TYPE:
             if len(self.nothing) < self.time:
                 self.buffer.append(value) #cut off values after time_range
             self.update_plot()
         if type==AddTypes.BUFFER:
+=======
+        if type==MeasurementTypes.BUFFER:
+>>>>>>> main
             if len(self.buffer) < self.time:
                 self.buffer.append(value) #cut off values after time_range
             self.update_plot()
-        if type==AddTypes.SAMPLE:
+        if type==MeasurementTypes.SAMPLE:
             if len(self.sample) < self.time:
                 self.sample.append(value) #cut off values after time_range
             self.update_plot()
