@@ -73,7 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def add_value(self,value,type):
         if type==MeasurementTypes.NO_TYPE:
             if len(self.nothing) < self.time:
-                self.buffer.append(value) #cut off values after time_range
+                self.nothing.append(value) #cut off values after time_range
             self.update_plot()
         if type==MeasurementTypes.BUFFER:
             if len(self.buffer) < self.time:
