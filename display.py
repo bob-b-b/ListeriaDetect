@@ -41,10 +41,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.plot_graph)
 
         self.time = time_range
+        self.nothing = []
         self.buffer = []
         self.sample = []
+        
+        pen = pg.mkPen(color=(255, 100, 255))
+        self.nothingline = self.plot_graph.plot(
+            range(1, len(self.nothing) + 1),
+            self.nothing,
+            name="Nothing",
+            pen=pen,
+        )
 
-        pen = pg.mkPen(color=(0, 0, 255))
+        pen = pg.mkPen(color=(100, 255, 255))
         self.bufferline = self.plot_graph.plot(
             range(1, len(self.buffer) + 1),
             self.buffer,
@@ -52,7 +61,7 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
-        pen = pg.mkPen(color=(255, 0, 0))
+        pen = pg.mkPen(color=(255, 255, 100))
         self.sampleline = self.plot_graph.plot(
             range(1, len(self.sample) + 1),
             self.sample,
@@ -72,6 +81,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #These methods update the data used in the graph
     def add_value(self,value,type):
+        if type==AddTypes.NO_TYPE:
+            if len(self.nothing) < self.time:
+                self.buffer.append(value) #cut off values after time_range
+            self.update_plot()
         if type==AddTypes.BUFFER:
             if len(self.buffer) < self.time:
                 self.buffer.append(value) #cut off values after time_range
@@ -82,6 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.update_plot()
 
     def clear_data(self):
+        self.nothing = []
         self.buffer = []
         self.sample = []
 

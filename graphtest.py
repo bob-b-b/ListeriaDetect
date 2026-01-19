@@ -52,5 +52,5 @@ class MainWindow(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication([])
 main = MainWindow(10)
 main.show()
-show_text("testing")
+main.show_text("testing")
 app.exec()
