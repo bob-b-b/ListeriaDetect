@@ -71,15 +71,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #These methods update the data used in the graph
     def add_value(self,value,type):
-<<<<<<< HEAD
-        if type==AddTypes.NO_TYPE:
+        if type==MeasurementTypes.NO_TYPE:
             if len(self.nothing) < self.time:
                 self.buffer.append(value) #cut off values after time_range
             self.update_plot()
-        if type==AddTypes.BUFFER:
-=======
         if type==MeasurementTypes.BUFFER:
->>>>>>> main
             if len(self.buffer) < self.time:
                 self.buffer.append(value) #cut off values after time_range
             self.update_plot()
