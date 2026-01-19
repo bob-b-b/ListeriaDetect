@@ -8,12 +8,13 @@ class frequency_grabber:
     __ser=None
     __conn=None
     __cursor=None
+    __SEIRAL_PORT='/dev/ttyACM0'
    
     def __init__(self):
         # Set the correct Serial port
         #More robust error handling would be better here, this is for testing
         try:
-            self.__ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+            self.__ser = serial.Serial(self.__SEIRAL_PORT, 115200, timeout=1)
             print("Successful connection established")
         except Exception as e:
             self.__ser = None
@@ -46,7 +47,7 @@ class frequency_grabber:
                 self.__conn.commit()
                 return freq
             else:
-                print(line)
+                print("Return value:{line}")
             return -1
         except Exception as error:
             print(error)
