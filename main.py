@@ -5,7 +5,7 @@ import signal
 import os
 import sys
 import threading
-from signals import shared_msg, AddTypes
+from signals import shared_msg, MeasurementTypes
 
 class __main__:
 
@@ -75,7 +75,7 @@ class __main__:
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
-        nothing_measurement=self.embedded_interaction.measure_frequency(AddTypes.NO_TYPE)
+        nothing_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.NO_TYPE)
         print(nothing_measurement)
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
@@ -85,7 +85,7 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__buffer_measurement=self.embedded_interaction.measure_frequency(AddTypes.BUFFER)
+        self.__buffer_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.BUFFER)
 
         #display.display.display_sample_next()
         shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
@@ -103,7 +103,7 @@ class __main__:
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
 
-        self.__sample_measurement=self.embedded_interaction.measure_frequency(AddTypes.SAMPLE)
+        self.__sample_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.SAMPLE)
         # old tolerance check. currently we utilize both so might as well leave it in as
         # were weren't able to do testing with actual listeria and refine the checks for that
         legacy_result = not(
