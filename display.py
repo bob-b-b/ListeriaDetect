@@ -93,7 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
 #These methods switch between showing graph and instruction
     @QtCore.pyqtSlot(str)
     def show_text(self, text):
-        self.plot_graph.setTitle(text, color="k", size="20pt")
+        self.plot_graph.setTitle(text, color="k", size="16pt")
 
     @QtCore.pyqtSlot()
     def show_graph(self):

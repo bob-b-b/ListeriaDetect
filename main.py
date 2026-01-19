@@ -72,7 +72,7 @@ class __main__:
         print("Please press button for control measurement solution, then press the button")
         #display.display.display_buffer_next()
         main_window.show_graph()
-        main_window.show_text("Please press button for control measurement solution, then press the button")
+        main_window.show_text("Press button to start control measurement")
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
