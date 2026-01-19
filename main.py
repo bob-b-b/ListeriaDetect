@@ -11,7 +11,6 @@ from signals import shared_msg, AddTypes
 class __main__:
 
     __is_running=False
-    __nothing_measurement=None
     __buffer_measurement=None
     __sample_measurement=None
     __result=False
