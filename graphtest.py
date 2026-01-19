@@ -9,11 +9,12 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
 
         #Frequency Plot
+        pg.setConfigOption('background', 'k')
         self.plot_graph = pg.PlotWidget()
         self.plot_graph.hide()
         self.plot_graph.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
-        self.plot_graph.setTitle("Frequency Over Time", color="k", size="20pt") #MAKE TITLE CHANGEABLE IN A METHOD
-        styles = {"color": "red", "font-size": "18px"}
+        self.plot_graph.setTitle("Frequency Over Time", color="w", size="20pt") #MAKE TITLE CHANGEABLE IN A METHOD
+        styles = {"color": "white", "font-size": "18px"}
         self.plot_graph.setLabel("left", "Frequency (unit)", **styles)
         self.plot_graph.setLabel("bottom", "Time (unit)", **styles)
         self.plot_graph.addLegend()
@@ -26,7 +27,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.buffer = []
         self.sample = []
 
-        pen = pg.mkPen(color=(0, 0, 255))
+        pen = pg.mkPen(color=(100, 255, 255))
         self.bufferline = self.plot_graph.plot(
             range(1, len(self.buffer) + 1),
             self.buffer,
@@ -34,7 +35,7 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
-        pen = pg.mkPen(color=(255, 0, 0))
+        pen = pg.mkPen(color=(255, 255, 100))
         self.sampleline = self.plot_graph.plot(
             range(1, len(self.sample) + 1),
             self.sample,
@@ -44,8 +45,12 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.plot_graph.showMaximized()
         
+    def show_text(self, text):
+        self.plot_graph.setTitle(text, color="w", size="20pt")
+        
         
 app = QtWidgets.QApplication([])
 main = MainWindow(10)
 main.show()
+show_text("testing")
 app.exec()

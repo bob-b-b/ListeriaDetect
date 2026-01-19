@@ -26,6 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.textscreen)
 
         #Frequency Plot
+        pg.setConfigOption('background', 'k')
         self.plot_graph = pg.PlotWidget()
         self.plot_graph.hide()
         self.plot_graph.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
@@ -87,7 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
 #These methods switch between showing graph and instruction
     @QtCore.pyqtSlot(str)
     def show_text(self, text):
-        self.plot_graph.setTitle(text)
+        self.plot_graph.setTitle(text, color="w", size="20pt")
 
     @QtCore.pyqtSlot()
     def show_graph(self):
