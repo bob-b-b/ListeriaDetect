@@ -45,6 +45,8 @@ class frequency_grabber:
                             (timestamp, freq))
                 self.__conn.commit()
                 return freq
+            else:
+                print("Returned:{line}")
             return -1
         except Exception as error:
             print(error)
