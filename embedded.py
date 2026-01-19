@@ -67,8 +67,14 @@ class control:
     
     def measure_frequency(self, type:MeasurementTypes = MeasurementTypes.NO_TYPE):
         if(type!=MeasurementTypes.NO_TYPE):
+            shared_msg.trigger_text.emit("Preparing for measurement")
             self.__start_pump()
             time.sleep(self.__TIME_BEFORE_MEASUREMENT)
+
+        if (type==MeasurementTypes.BUFFER):
+            shared_msg.trigger_text("Measuring frequency in buffer solution")
+        elif (type==MeasurementTypes.SAMPLE):
+            shared_msg.trigger_text("Measuring frequency in sample solution")
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):

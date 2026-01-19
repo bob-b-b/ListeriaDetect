@@ -69,42 +69,39 @@ class __main__:
 
     def start(self):
         shared_msg.clear_data.emit()
-        print("Please press button for control measurement solution, then press the button")
-        #display.display.display_buffer_next()
+        #print("Please press button for control measurement solution, then press the button")
         main_window.show_graph()
         shared_msg.trigger_text.emit("Press button to start control measurement")
 
     def measure_nothing(self):
-        print("Measuring nothing... For maintenance?")
+
+        #print("Measuring nothing... For maintenance?")
+        shared_msg.trigger_text.emit("Control measurement in progress...")
         nothing_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.NO_TYPE)
-        print(nothing_measurement)
-        #display.display.display_graph()
-        shared_msg.trigger_graph.emit()
-        shared_msg.trigger_text.emit("Put input tube in buffer solution, then press the button")
+
+        #print(nothing_measurement)
+        shared_msg.trigger_text.emit("Prepare buffer solution, then press the button")
 
     def measure_buffer(self):
         shared_msg.clear_data.emit()
-        print("Measuring buffer solution, insert sample next, then press the button")
-        #display.display.display_graph()
-        shared_msg.trigger_graph.emit()
 
+        #print("Measuring buffer solution, insert sample next, then press the button")
         self.__buffer_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.BUFFER)
 
-        #display.display.display_sample_next()
-        shared_msg.trigger_text.emit("Put input tube in sample, then press the button")
+        shared_msg.trigger_text.emit("Press the button, to empty tubes")
 
-        print(self.__buffer_measurement)
+        #print(self.__buffer_measurement)
 
 
     def expulse_remains(self):
-        print("Getting rid of remaining liquid")
+        #print("Getting rid of remaining liquid")
+        shared_msg.trigger_text("Emptying liquid from tubes")
         self.embedded_interaction.expulse_remaining_liquid()
         
 
     def measure_sample(self):
-        print ("Measuring sample solution, insert cleaning next, then press the button")
-        #display.display.display_graph()
-        shared_msg.trigger_graph.emit()
+        #print ("Measuring sample solution, insert cleaning next, then press the button")
+        shared_msg.trigger_text("Prepare sample, then press the button")
 
         self.__sample_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.SAMPLE)
         # old tolerance check. currently we utilize both so might as well leave it in as
@@ -132,21 +129,19 @@ class __main__:
         except Exception:
             detector_result, score = False, 0.0
 
-        self.__result = detector_result or legacy_result
-        #display.display.display_cleaning_next()
+        self.__result = detector_result #or legacy_result
 
-        print(self.__sample_measurement)
-        shared_msg.trigger_text.emit("Measurement done.  Switch to cleaning solution, then press the button.")
+        #print(self.__sample_measurement)
+        shared_msg.trigger_text.emit("Complete! Prepare for cleaning.")
 
 
     def clean(self):
-        print("Cleaning the device, perepare next sample")
-        #display.display.display_cleaning()
+        #print("Cleaning the device, perepare next sample")
         shared_msg.trigger_text.emit("Cleaning the device, perepare next sample")
         self.embedded_interaction.clean()
-        print("Listeria: ", self.__result)
-        #display.display.display_result(self.__result)
-        shared_msg.trigger_text.emit("Listeria: {self.__result}")
+        #print("Listeria: ", self.__result)
+        result_text="Listeria: "+self.__result+ " B.avg:"+self.__buffer_measurement+" S.avg:"+self.__sample_measurement
+        shared_msg.trigger_text.emit(result_text)
 
     def application_stop(self,sig,frame):
         self.__is_running=False
