@@ -70,7 +70,7 @@ class __main__:
     def start(self):
         shared_msg.clear_data.emit()
         #print("Please press button for control measurement solution, then press the button")
-        shared_msg.trigger_graph()
+        shared_msg.trigger_graph.emit()
         shared_msg.trigger_text.emit("Press button to start control measurement")
 
     def measure_nothing(self):
