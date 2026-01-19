@@ -15,7 +15,7 @@ class MainWindow(QtWidgets.QMainWindow):
         shared_msg.clear_data.connect(self.clear_data)        
 
         #Frequency Plot
-        pg.setConfigOption('background', 'k')
+        pg.setConfigOption('background', 'w')
         self.plot_graph = pg.PlotWidget()
         self.plot_graph.hide()
         self.plot_graph.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
@@ -34,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.buffer = []
         self.sample = []
         
-        pen = pg.mkPen(color=(255, 100, 255))
+        pen = pg.mkPen(color=(0, 155, 0))
         self.nothingline = self.plot_graph.plot(
             range(1, len(self.nothing) + 1),
             self.nothing,
@@ -42,7 +42,7 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
-        pen = pg.mkPen(color=(100, 255, 255))
+        pen = pg.mkPen(color=(155, 0, 0))
         self.bufferline = self.plot_graph.plot(
             range(1, len(self.buffer) + 1),
             self.buffer,
@@ -50,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
             pen=pen,
         )
 
-        pen = pg.mkPen(color=(255, 255, 100))
+        pen = pg.mkPen(color=(0, 0, 155))
         self.sampleline = self.plot_graph.plot(
             range(1, len(self.sample) + 1),
             self.sample,
@@ -66,7 +66,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sampleline.setData(range(1, len(self.sample) + 1), self.sample)
 
     def set_title(self, title):
-        self.plot_graph.setTitle(title, color="w", size="20pt")
+        self.plot_graph.setTitle(title, color="k", size="20pt")
 
 
 #These methods update the data used in the graph
@@ -93,7 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
 #These methods switch between showing graph and instruction
     @QtCore.pyqtSlot(str)
     def show_text(self, text):
-        self.plot_graph.setTitle(text, color="w", size="20pt")
+        self.plot_graph.setTitle(text, color="k", size="20pt")
 
     @QtCore.pyqtSlot()
     def show_graph(self):
