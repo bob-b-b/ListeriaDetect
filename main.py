@@ -72,7 +72,7 @@ class __main__:
         print("Please press button for control measurement solution, then press the button")
         #display.display.display_buffer_next()
         main_window.show_graph()
-        main_window.show_text("Press button to start control measurement")
+        shared_msg.trigger_text.emit("Press button to start control measurement")
 
     def measure_nothing(self):
         print("Measuring nothing... For maintenance?")
@@ -80,6 +80,7 @@ class __main__:
         print(nothing_measurement)
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
+        shared_msg.trigger_text.emit("Put input tube in buffer solution, then press the button")
 
     def measure_buffer(self):
         shared_msg.clear_data.emit()
@@ -90,7 +91,7 @@ class __main__:
         self.__buffer_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.BUFFER)
 
         #display.display.display_sample_next()
-        shared_msg.trigger_text.emit("Measurement done.  Switch to sample, then press the button.")
+        shared_msg.trigger_text.emit("Put input tube in sample, then press the button")
 
         print(self.__buffer_measurement)
 
