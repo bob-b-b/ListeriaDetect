@@ -74,20 +74,20 @@ class MainWindow(QtWidgets.QMainWindow):
         if type==MeasurementTypes.NO_TYPE:
             if len(self.nothing) < self.time:
                 self.nothing.append(value) #cut off values after time_range
-            self.update_plot()
         if type==MeasurementTypes.BUFFER:
             if len(self.buffer) < self.time:
                 self.buffer.append(value) #cut off values after time_range
-            self.update_plot()
         if type==MeasurementTypes.SAMPLE:
             if len(self.sample) < self.time:
                 self.sample.append(value) #cut off values after time_range
-            self.update_plot()
+        self.update_plot()
+        
 
     def clear_data(self):
         self.nothing = []
         self.buffer = []
         self.sample = []
+        self.update_plot()
 
 
 #These methods switch between showing graph and instruction
