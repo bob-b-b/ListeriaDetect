@@ -140,7 +140,7 @@ class __main__:
         shared_msg.trigger_text.emit("Cleaning the device, perepare next sample")
         self.embedded_interaction.clean()
         #print("Listeria: ", self.__result)
-        result_text="Listeria: "+self.__result+ " B.avg:"+self.__buffer_measurement+" S.avg:"+self.__sample_measurement
+        result_text = f"Listeria: {self.__result} B.avg: {self.__buffer_measurement} S.avg: {self.__sample_measurement}"
         shared_msg.trigger_text.emit(result_text)
 
     def application_stop(self,sig,frame):
