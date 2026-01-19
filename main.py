@@ -95,13 +95,13 @@ class __main__:
 
     def expulse_remains(self):
         #print("Getting rid of remaining liquid")
-        shared_msg.trigger_text("Emptying liquid from tubes")
+        shared_msg.trigger_text.emit("Emptying liquid from tubes")
         self.embedded_interaction.expulse_remaining_liquid()
         
 
     def measure_sample(self):
         #print ("Measuring sample solution, insert cleaning next, then press the button")
-        shared_msg.trigger_text("Prepare sample, then press the button")
+        shared_msg.trigger_text.emit("Prepare sample, then press the button")
 
         self.__sample_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.SAMPLE)
         # old tolerance check. currently we utilize both so might as well leave it in as

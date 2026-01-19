@@ -72,9 +72,9 @@ class control:
             time.sleep(self.__TIME_BEFORE_MEASUREMENT)
 
         if (type==MeasurementTypes.BUFFER):
-            shared_msg.trigger_text("Measuring frequency in buffer solution")
+            shared_msg.trigger_text.emit("Measuring frequency in buffer solution")
         elif (type==MeasurementTypes.SAMPLE):
-            shared_msg.trigger_text("Measuring frequency in sample solution")
+            shared_msg.trigger_text.emit("Measuring frequency in sample solution")
 
         sample_sums=0
         for _ in range(self.QCM_FREQUENCY_SAMPLE_SIZE):
