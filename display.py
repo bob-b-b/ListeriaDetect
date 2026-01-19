@@ -36,7 +36,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.plot_graph.setLabel("bottom", "Time (unit)", **styles)
         self.plot_graph.addLegend()
         self.plot_graph.showGrid(x=True, y=True)
-        self.plot_graph.setXRange(0, 10)
+        #self.plot_graph.setXRange(0, 10)
         #self.plot_graph.setYRange(0, 10)
 
         self.time = time_range
@@ -92,6 +92,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot()
     def show_graph(self):
+        self.plot_graph.setTitle("Frequency Over Time", color="k", size="20pt")
         self.plot_graph.showMaximized()
         
     
