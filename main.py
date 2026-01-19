@@ -83,6 +83,7 @@ class __main__:
         shared_msg.trigger_graph.emit()
 
     def measure_buffer(self):
+        shared_msg.clear_data.emit()
         print("Measuring buffer solution, insert sample next, then press the button")
         #display.display.display_graph()
         shared_msg.trigger_graph.emit()
