@@ -12,18 +12,7 @@ class MainWindow(QtWidgets.QMainWindow):
         shared_msg.trigger_graph.connect(self.show_graph)
         shared_msg.trigger_text.connect(self.show_text)
         shared_msg.add_value.connect(self.add_value)
-        shared_msg.clear_data.connect(self.clear_data)
-
-        #Text Screen
-        #self.textscreen = QtWidgets.QLabel(self)
-        #self.textscreen.hide()
-        #self.textscreen.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
-        #font = self.textscreen.font()
-        #font.setPixelSize(30)
-        #self.textscreen.setFont(font)
-        #self.textscreen.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
-
-        
+        shared_msg.clear_data.connect(self.clear_data)        
 
         #Frequency Plot
         pg.setConfigOption('background', 'k')
