@@ -72,6 +72,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #These methods update the graph itself
     def update_plot(self):
+        self.nothingline.setData(range(1, len(self.nothing) + 1), self.nothing)
         self.bufferline.setData(range(1, len(self.buffer) + 1), self.buffer)
         self.sampleline.setData(range(1, len(self.sample) + 1), self.sample)
 
