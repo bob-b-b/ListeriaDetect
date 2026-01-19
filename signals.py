@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QObject, pyqtSignal
 from enum import Enum
 
-class AddTypes(Enum):
+class MeasurementTypes(Enum):
     NO_TYPE=0
     BUFFER=1
     SAMPLE=2
@@ -11,7 +11,7 @@ class ScreenSignals(QObject):
     trigger_graph = pyqtSignal()
     trigger_text = pyqtSignal(str)
 
-    add_value = pyqtSignal(float, AddTypes)
+    add_value = pyqtSignal(float, MeasurementTypes)
 
     clear_data = pyqtSignal()
 
