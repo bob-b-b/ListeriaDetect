@@ -14,7 +14,7 @@ class __main__:
     __sample_measurement=None
     __result=False
 
-    __MEASUREMENT_TOLERANCE=1000
+    __MEASUREMENT_TOLERANCE=4000
 
     embedded_interaction=None
     stages=[]
@@ -77,7 +77,7 @@ class __main__:
 
         #print("Measuring nothing... For maintenance?")
         shared_msg.trigger_text.emit("Control measurement in progress...")
-        nothing_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.NO_TYPE)
+        self.nothing_measurement=self.embedded_interaction.measure_frequency(MeasurementTypes.NO_TYPE)
 
         #print(nothing_measurement)
         shared_msg.trigger_text.emit("Prepare buffer solution, then press the button")
@@ -124,12 +124,12 @@ class __main__:
                 'rho_Q': 2648.0,
             }
             detector_result, score = self.embedded_interaction.detect_listeria(
-                baseline=self.__buffer_measurement, expected_liquid=expected_liquid, threshold_hz=100.0
+                baseline=self.nothing_measurement, expected_liquid=expected_liquid, threshold_hz=100.0
             )
         except Exception:
             detector_result, score = False, 0.0
 
-        self.__result = detector_result #or legacy_result
+        self.__result = detector_result or legacy_result
 
         #print(self.__sample_measurement)
         shared_msg.trigger_text.emit("Complete! Prepare for cleaning.")
